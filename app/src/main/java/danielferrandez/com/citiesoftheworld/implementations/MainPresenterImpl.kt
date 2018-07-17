@@ -10,8 +10,8 @@ class MainPresenterImpl(private var mainView: MainActivity) : MainPresenter {
 
     private var mInteractor: MainInteractor = MainInteractorImpl(this, mainView)
 
-    override fun getCities() {
-        mInteractor.getCities()
+    override fun getCities(filter:String?, fromScroll: Boolean) {
+        mInteractor.getCities(filter, fromScroll)
         mainView.showLoading()
     }
 

@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface ApiServiceInterface {
 
     @GET("city?include=country")
-    fun getCities(@Query("page") page: Int): Observable<RequestModel>
+    fun getCities(@Query("page") page: Int, @Query("filter[0][name][contains]") filter: String?): Observable<RequestModel>
 
     companion object {
         fun create(): ApiServiceInterface {

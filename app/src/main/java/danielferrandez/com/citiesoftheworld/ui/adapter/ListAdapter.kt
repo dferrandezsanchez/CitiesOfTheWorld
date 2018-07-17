@@ -25,8 +25,9 @@ class CitiesListAdapter (val items: ArrayList<CityModel>, private val context: C
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bindUsers(cityModel: CityModel, context: Context){
-            itemView.tv_city.text = (cityModel.name)
-            itemView.tv_country.text = cityModel.country.name
+            itemView.tv_city.text = cityModel.name
+            itemView.tv_local_name.text = cityModel.local_name
+            itemView.tv_country_name.text = cityModel.country.name
         }
     }
 

@@ -14,9 +14,9 @@ class MainRepositoryImpl(private var mainInteractorImpl: MainInteractorImpl) : M
         ApiServiceInterface.create()
     }
 
-    override fun getCities(page:Int) {
+    override fun getCities(page:Int, filter:String?) {
         disposable =
-                apiServiceInterface.getCities(page)
+                apiServiceInterface.getCities(page, filter)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

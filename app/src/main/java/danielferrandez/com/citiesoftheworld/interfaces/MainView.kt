@@ -4,7 +4,7 @@ import danielferrandez.com.citiesoftheworld.model.CityModel
 
 interface MainView {
 
-    fun getCities()
+    fun getCities(fromScroll: Boolean)
     fun getCitiesSuccess(items:List<CityModel>)
     fun getCitiesError()
 

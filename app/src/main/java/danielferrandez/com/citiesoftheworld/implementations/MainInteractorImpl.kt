@@ -16,23 +16,22 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
 
     private lateinit var cities: ArrayList<CityModel>
 
-    override fun getCities() {
-//        getCitiesFromDB()
-//        if(cities.size>0){
-//            getCitiesFromDBSuccess()
-//        }else{
-//            mRepository.getCities(page)
-//        }
-        mRepository.getCities(page)
+    override fun getCities(filter:String?, fromScroll: Boolean) {
+        if(fromScroll){
+            page++
+        }else{
+            page = 1
+        }
+        mRepository.getCities(page, filter)
     }
 
     override fun getCitiesSuccess(result: RequestModel) {
-        for (element in result.data.items) {
+        /*for (element in result.data.items) {
             citiesDBHelper.insertCity(element)
         }
         if(result.data.pagination.current_page != result.data.pagination.last_page){
             this.page++
-        }
+        }*/
         mainPresenter.getCitiesSuccess(result.data.items)
     }
 

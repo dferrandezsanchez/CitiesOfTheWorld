@@ -2,17 +2,14 @@ package danielferrandez.com.citiesoftheworld.ui
 
 import android.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import danielferrandez.com.citiesoftheworld.MainActivity
 import danielferrandez.com.citiesoftheworld.R
 import danielferrandez.com.citiesoftheworld.model.CityModel
 
@@ -33,12 +30,17 @@ class MapCitiesFragment : Fragment(), OnMapReadyCallback {
     // In java I can resume Map state, not working in Kotlin for unknown reason
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        // Add a marker in Sydney and move the camera
         setupMap()
     }
 
     fun setData(items: List<CityModel>) {
         citiesListApi.addAll(items)
+        setupMap()
+    }
+
+    fun clearList(){
+        citiesListApi.clear()
+        mMap?.clear()
     }
 
     fun setupMap() {

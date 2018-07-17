@@ -4,7 +4,7 @@ import danielferrandez.com.citiesoftheworld.api.RequestModel
 
 
 interface MainInteractor {
-    fun getCities()
+    fun getCities(filter:String?, fromScroll: Boolean)
     fun getCitiesSuccess(result: RequestModel)
     fun getCitiesError(error: Throwable)
 

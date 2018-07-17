@@ -40,7 +40,7 @@ class CitiesListFragment : Fragment() {
                 if (scrolling && (rv_cities.layoutManager.childCount + (rv_cities.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                                 >= rv_cities.layoutManager.itemCount - 5)) {
                     scrolling = false
-                    (activity as MainActivity).getCities()
+                    (activity as MainActivity).getCities(true)
                 }
 
             }
@@ -55,15 +55,24 @@ class CitiesListFragment : Fragment() {
 
     fun setData(items: List<CityModel>) {
         citiesListApi.addAll(items)
-        rv_cities.adapter.notifyDataSetChanged()
-        Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities.adapter.itemCount)
+        if (rv_cities != null) {
+            rv_cities.adapter.notifyDataSetChanged()
+            Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities.adapter.itemCount)
+        }
+    }
+
+    fun clearList(){
+        citiesListApi.clear()
+        if (rv_cities != null) {
+            rv_cities.adapter.notifyDataSetChanged()
+        }
     }
 
     fun showProgress(show: Boolean) {
         if (show) {
-            pb_loading.visibility = View.VISIBLE
+            pb_loading?.visibility = View.VISIBLE
         } else {
-            pb_loading.visibility = View.GONE
+            pb_loading?.visibility = View.GONE
         }
 
     }
