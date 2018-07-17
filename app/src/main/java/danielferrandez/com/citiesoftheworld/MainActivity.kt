@@ -4,34 +4,37 @@ import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import danielferrandez.com.citiesoftheworld.implementations.MainPresenterImpl
 import danielferrandez.com.citiesoftheworld.interfaces.MainView
-import danielferrandez.com.citiesoftheworld.ui.ListFragment
-import danielferrandez.com.citiesoftheworld.ui.MapFragment
+import danielferrandez.com.citiesoftheworld.model.CityModel
+import danielferrandez.com.citiesoftheworld.ui.CitiesListFragment
+import danielferrandez.com.citiesoftheworld.ui.MapCitiesFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_list.*
 
 class MainActivity : AppCompatActivity(), MainView {
-    private val listFragment:Fragment = ListFragment()
-    private val mapFragment: Fragment = MapFragment()
+
+    private lateinit var citiesListFragment: Fragment
+    private lateinit var mapFragment: Fragment
     private lateinit var mPresenter: MainPresenterImpl
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        fragmentManager.beginTransaction()
-                .add(R.id.main_content, listFragment)
-                .addToBackStack(null)
-                .commit()
         initialize()
     }
 
     private fun initialize() {
+        citiesListFragment = CitiesListFragment()
+        mapFragment = MapCitiesFragment()
         mPresenter = MainPresenterImpl(this)
+        fragmentManager.beginTransaction()
+                .replace(R.id.main_content, citiesListFragment)
+                .addToBackStack("List")
+                .commit()
         getCities()
     }
 
@@ -39,12 +42,12 @@ class MainActivity : AppCompatActivity(), MainView {
         mPresenter.getCities()
     }
 
-    override fun getCitiesSuccess() {
-        Log.i("SUCCESS","Data loaded")
+    override fun getCitiesSuccess(items: List<CityModel>) {
+        (citiesListFragment as CitiesListFragment).setData(items)
     }
 
     override fun getCitiesError() {
-        Log.e("ERROR","Data not loaded")
+        Log.e("ERROR", "Data not loaded")
     }
 
     override fun showLoading() {
@@ -59,15 +62,15 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun changeToList() {
         fragmentManager.beginTransaction()
-                .replace(R.id.main_content, listFragment)
-                .addToBackStack(null)
+                .replace(R.id.main_content, citiesListFragment)
+                .addToBackStack("List")
                 .commit()
     }
 
-    private fun changeToMap(){
+    private fun changeToMap() {
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, mapFragment)
-                .addToBackStack(null)
+                .addToBackStack("Map")
                 .commit()
     }
 

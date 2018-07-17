@@ -5,11 +5,12 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiServiceInterface {
 
-    @GET("city?include=country&per_page=20")
-    fun getCities(): Observable<RequestModel>
+    @GET("city?include=country")
+    fun getCities(@Query("page") page: Int): Observable<RequestModel>
 
     companion object {
         fun create(): ApiServiceInterface {

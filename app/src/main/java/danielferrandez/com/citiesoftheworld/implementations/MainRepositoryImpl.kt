@@ -7,29 +7,29 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MainRepositoryImpl(private var mainPresenterImpl: MainPresenterImpl) : MainRepository {
+class MainRepositoryImpl(private var mainInteractorImpl: MainInteractorImpl) : MainRepository {
 
     private var disposable: Disposable? = null
     private val apiServiceInterface by lazy {
         ApiServiceInterface.create()
     }
 
-    override fun getCities() {
+    override fun getCities(page:Int) {
         disposable =
-                apiServiceInterface.getCities()
+                apiServiceInterface.getCities(page)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                { result -> getCitiesSuccess(result)},
-                                { error ->  getCitiesError(error)}
+                                { result -> getCitiesSuccess(result) },
+                                { error -> getCitiesError(error) }
                         )
     }
 
     override fun getCitiesSuccess(result: RequestModel) {
-        mainPresenterImpl.getCitiesSuccess(result)
+        mainInteractorImpl.getCitiesSuccess(result)
     }
 
     override fun getCitiesError(error: Throwable) {
-        mainPresenterImpl.getCitiesError(error)
+        mainInteractorImpl.getCitiesError(error)
     }
 }
