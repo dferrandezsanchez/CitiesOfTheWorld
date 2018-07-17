@@ -15,9 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView {
 
-    private lateinit var citiesListFragment: Fragment
-    private lateinit var mapFragment: Fragment
+    private lateinit var citiesListFragment: CitiesListFragment
+    private lateinit var mapFragment: MapCitiesFragment
     private lateinit var mPresenter: MainPresenterImpl
+    private var firstLoading: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity(), MainView {
         mPresenter = MainPresenterImpl(this)
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, citiesListFragment)
-                .addToBackStack("List")
                 .commit()
         getCities()
     }
@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun getCitiesSuccess(items: List<CityModel>) {
-        (citiesListFragment as CitiesListFragment).setData(items)
+        citiesListFragment.setData(items)
+        mapFragment.setData(items)
     }
 
     override fun getCitiesError() {
@@ -51,26 +52,33 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showLoading() {
-        lyt_progress.visibility = View.VISIBLE
-        lyt_main_content.visibility = View.GONE
+        if(firstLoading) {
+            lyt_progress.visibility = View.VISIBLE
+            lyt_main_content.visibility = View.GONE
+        }else{
+            citiesListFragment.showProgress(true)
+        }
     }
 
     override fun hideLoading() {
-        lyt_progress.visibility = View.GONE
-        lyt_main_content.visibility = View.VISIBLE
+        if(firstLoading) {
+            lyt_progress.visibility = View.GONE
+            lyt_main_content.visibility = View.VISIBLE
+            firstLoading = false
+        }else{
+            citiesListFragment.showProgress(false)
+        }
     }
 
     private fun changeToList() {
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, citiesListFragment)
-                .addToBackStack("List")
                 .commit()
     }
 
     private fun changeToMap() {
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, mapFragment)
-                .addToBackStack("Map")
                 .commit()
     }
 

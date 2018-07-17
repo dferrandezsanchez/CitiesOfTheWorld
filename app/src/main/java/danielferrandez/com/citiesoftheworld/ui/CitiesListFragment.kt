@@ -53,10 +53,18 @@ class CitiesListFragment : Fragment() {
         })
     }
 
-
     fun setData(items: List<CityModel>) {
         citiesListApi.addAll(items)
         rv_cities.adapter.notifyDataSetChanged()
-        Log.e("AÑADIDOS ELEMENTOS", "TOTAL "+rv_cities.adapter.itemCount)
+        Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities.adapter.itemCount)
+    }
+
+    fun showProgress(show: Boolean) {
+        if (show) {
+            pb_loading.visibility = View.VISIBLE
+        } else {
+            pb_loading.visibility = View.GONE
+        }
+
     }
 }

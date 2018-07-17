@@ -12,16 +12,16 @@ class MainPresenterImpl(private var mainView: MainActivity) : MainPresenter {
 
     override fun getCities() {
         mInteractor.getCities()
-        //mainView.showLoading()
+        mainView.showLoading()
     }
 
     override fun getCitiesSuccess(items: List<CityModel>) {
         mainView.getCitiesSuccess(items)
-        //mainView.hideLoading()
+        mainView.hideLoading()
     }
 
     override fun getCitiesError(error: Throwable) {
         mainView.getCitiesError()
-        //mainView.hideLoading()
+        mainView.hideLoading()
     }
 }
