@@ -6,23 +6,28 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import danielferrandez.com.citiesoftheworld.di.AppModule
+import danielferrandez.com.citiesoftheworld.di.DaggerAppComponent
 import danielferrandez.com.citiesoftheworld.implementations.MainPresenterImpl
 import danielferrandez.com.citiesoftheworld.interfaces.MainView
 import danielferrandez.com.citiesoftheworld.model.CityModel
 import danielferrandez.com.citiesoftheworld.ui.CitiesListFragment
 import danielferrandez.com.citiesoftheworld.ui.MapCitiesFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
+import java.util.*
+import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListener {
 
     private lateinit var citiesListFragment: CitiesListFragment
     private lateinit var mapFragment: MapCitiesFragment
-    private lateinit var mPresenter: MainPresenterImpl
     private var firstLoading: Boolean = true
-
     private var querySend: String = ""
     private var isSearching = false
+
+    @Inject
+    lateinit var mainPresenter: MainPresenterImpl
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +37,10 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
         initialize()
     }
 
-    private fun initialize() {
+    fun initialize() {
         citiesListFragment = CitiesListFragment()
         mapFragment = MapCitiesFragment()
-        mPresenter = MainPresenterImpl(this)
+        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
         main_filter.setOnQueryTextListener(this)
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, citiesListFragment)
@@ -44,7 +49,7 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
     }
 
     override fun getCities(fromScroll: Boolean) {
-        mPresenter.getCities(querySend, fromScroll)
+        mainPresenter.getCities(querySend, fromScroll)
     }
 
     override fun getCitiesSuccess(items: List<CityModel>) {
@@ -60,7 +65,7 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
     }
 
     override fun getCitiesFromDB() {
-        mPresenter.getCitiesFromDB()
+        mainPresenter.getCitiesFromDB()
     }
 
     override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {

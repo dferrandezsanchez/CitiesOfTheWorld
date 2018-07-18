@@ -49,7 +49,7 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         values.put(DBContract.CityEntity.COLUMN_COUNTRY_CONTINENT_ID, cityModel.country.continent_id)
 
         // Insert the new row, returning the primary key value of the new row
-        val newRowId = db.insert(DBContract.CityEntity.TABLE_NAME, null, values)
+        db.insert(DBContract.CityEntity.TABLE_NAME, null, values)
 
         return true
     }
@@ -64,7 +64,7 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun selectAllCities(offset: Int): ArrayList<CityModel> {
         var cities = ArrayList<CityModel>()
         val db = writableDatabase
-        var cursor: Cursor? = null
+        var cursor: Cursor
         try {
             cursor = db.rawQuery("select * from " + DBContract.CityEntity.TABLE_NAME + " limit 15 offset " + offset, null)
         } catch (e: SQLiteException) {

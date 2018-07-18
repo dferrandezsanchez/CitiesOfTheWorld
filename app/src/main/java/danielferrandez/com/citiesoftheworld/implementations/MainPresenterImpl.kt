@@ -6,7 +6,8 @@ import danielferrandez.com.citiesoftheworld.interfaces.MainPresenter
 import danielferrandez.com.citiesoftheworld.model.CityModel
 import java.util.ArrayList
 
-class MainPresenterImpl(private var mainView: MainActivity) : MainPresenter {
+
+class MainPresenterImpl(var mainView: MainActivity) : MainPresenter {
 
     private var mInteractor: MainInteractor = MainInteractorImpl(this, mainView)
 
