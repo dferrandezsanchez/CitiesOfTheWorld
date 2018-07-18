@@ -6,8 +6,6 @@ On this app our users will be able to see cities of the world with name country 
 
 ## Goal
 
-The app should load data from the API, store it locally and then the user interface present it by fetching from the local storage. 
-
 We want you to use some form of local caching of the data retrieved from the API, SQL Lite or Realm are both valid options.  
  
 The app should load data from the API, store it locally and then the user interface present it by fetching from the local storage. 
