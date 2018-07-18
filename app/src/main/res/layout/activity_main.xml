@@ -36,6 +36,7 @@
     </SearchView>
 
     <FrameLayout
+        android:background="@color/mainBackground"
         android:id="@+id/main_content"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -49,7 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@drawable/bottom_menu_selector"
+        app:itemTextColor="@drawable/bottom_menu_selector"
         app:elevation="4dp"
         app:menu="@menu/navigation" />
     </RelativeLayout>

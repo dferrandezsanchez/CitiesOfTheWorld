@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">CitiesOfTheWorld</string>
+    <string name="app_name">Cities Of The World</string>
     // Tabs
     <string name="title_list">List</string>
     <string name="title_map">Map</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     // General Strings
+    <string name="city_name">City Name</string>
+    <string name="local_name">Local Name</string>
+    <string name="country_name">Country Name</string>
 
 
 </resources>

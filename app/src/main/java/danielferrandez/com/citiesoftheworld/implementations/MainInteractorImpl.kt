@@ -14,24 +14,23 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
     private var page:Int = 1
     private var citiesDBHelper: CitiesDBHelper = CitiesDBHelper(mainView)
 
-    private lateinit var cities: ArrayList<CityModel>
+    private var cities: ArrayList<CityModel> = ArrayList()
 
     override fun getCities(filter:String?, fromScroll: Boolean) {
         if(fromScroll){
             page++
         }else{
             page = 1
+            citiesDBHelper.truncateTable()
+            cities.clear()
         }
         mRepository.getCities(page, filter)
     }
 
     override fun getCitiesSuccess(result: RequestModel) {
-        /*for (element in result.data.items) {
+        for (element in result.data.items) {
             citiesDBHelper.insertCity(element)
         }
-        if(result.data.pagination.current_page != result.data.pagination.last_page){
-            this.page++
-        }*/
         mainPresenter.getCitiesSuccess(result.data.items)
     }
 
@@ -42,15 +41,20 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
 
 
     override fun getCitiesFromDB() {
-        cities = citiesDBHelper.selectAllCities()
+        try {
+            cities = citiesDBHelper.selectAllCities(cities.size)
+            getCitiesFromDBSuccess(cities)
+        } catch (e: Exception) {
+            getCitiesFromDBError()
+        }
     }
 
-    override fun getCitiesFromDBSuccess() {
-        mainPresenter.getCitiesSuccess(cities)
+    override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {
+        mainPresenter.getCitiesFromDBSuccess(cities)
     }
 
     override fun getCitiesFromDBError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mainPresenter.getCitiesFromDBError()
     }
 
 }

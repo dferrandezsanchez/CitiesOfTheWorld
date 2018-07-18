@@ -1,10 +1,10 @@
 package danielferrandez.com.citiesoftheworld.implementations
 
 import danielferrandez.com.citiesoftheworld.MainActivity
-import danielferrandez.com.citiesoftheworld.api.RequestModel
 import danielferrandez.com.citiesoftheworld.interfaces.MainInteractor
 import danielferrandez.com.citiesoftheworld.interfaces.MainPresenter
 import danielferrandez.com.citiesoftheworld.model.CityModel
+import java.util.ArrayList
 
 class MainPresenterImpl(private var mainView: MainActivity) : MainPresenter {
 
@@ -23,5 +23,17 @@ class MainPresenterImpl(private var mainView: MainActivity) : MainPresenter {
     override fun getCitiesError(error: Throwable) {
         mainView.getCitiesError()
         mainView.hideLoading()
+    }
+
+    override fun getCitiesFromDB() {
+        mInteractor.getCitiesFromDB()
+    }
+
+    override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {
+        mainView.getCitiesFromDBSuccess(cities)
+    }
+
+    override fun getCitiesFromDBError() {
+        mainView.getCitiesFromDBError()
     }
 }

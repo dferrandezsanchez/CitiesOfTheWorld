@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="city_name">24sp</dimen>
     <dimen name="general_fields">16sp</dimen>
+    <dimen name="margin_citydata">24dp</dimen>
 </resources>

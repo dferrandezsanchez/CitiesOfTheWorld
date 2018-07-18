@@ -19,7 +19,7 @@ object DBContract {
             val COLUMN_COUNTRY_NAME = "cityCountryName"
             val COLUMN_COUNTRY_CREATED = "cityCountryCreated"
             val COLUMN_COUNTRY_UPDATED = "cityCountryUpdated"
-            val COLUMN_COUNTRY_COUNTRY_ID = "cityCountryCountryId"
+            val COLUMN_COUNTRY_CONTINENT_ID = "cityCountryContinentId"
         }
     }
 }

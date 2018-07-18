@@ -14,4 +14,4 @@ data class Country(val id: Int,
                    val name: String,
                    val created_at: String,
                    val updated_at:String,
-                   val country_id: Int)
+                   val continent_id: Int)

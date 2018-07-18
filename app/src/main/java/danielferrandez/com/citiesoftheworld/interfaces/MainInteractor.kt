@@ -1,6 +1,8 @@
 package danielferrandez.com.citiesoftheworld.interfaces
 
 import danielferrandez.com.citiesoftheworld.api.RequestModel
+import danielferrandez.com.citiesoftheworld.model.CityModel
+import java.util.ArrayList
 
 
 interface MainInteractor {
@@ -9,6 +11,6 @@ interface MainInteractor {
     fun getCitiesError(error: Throwable)
 
     fun getCitiesFromDB()
-    fun getCitiesFromDBSuccess()
+    fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>)
     fun getCitiesFromDBError()
 }

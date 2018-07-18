@@ -11,9 +11,9 @@
         android:elevation="8dp">
 
         <LinearLayout
-            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -23,42 +23,45 @@
 
                 <ImageView
                     android:id="@+id/iv_city"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@color/colorPrimary"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/default_continent" />
 
-                <TextView
-                    android:id="@+id/tv_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="City Name"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:textSize="@dimen/city_name" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:id="@+id/lyt_city_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_local_name"
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_citydata"
+                    android:id="@+id/lyt_city_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Local Name"
-                    android:textSize="@dimen/general_fields" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_country_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Country Name"
-                    android:textSize="@dimen/general_fields" />
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/tv_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/city_name"
+                        android:textSize="@dimen/city_name" />
+
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_country_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/country_name"
+                        android:textSize="@dimen/general_fields" />
+
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_local_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/local_name"
+                        android:textSize="@dimen/general_fields" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
 

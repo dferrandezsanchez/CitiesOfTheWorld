@@ -1,5 +1,6 @@
 package danielferrandez.com.citiesoftheworld.db
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -45,7 +46,7 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         values.put(DBContract.CityEntity.COLUMN_COUNTRY_NAME, cityModel.country.name)
         values.put(DBContract.CityEntity.COLUMN_COUNTRY_CREATED, cityModel.country.created_at)
         values.put(DBContract.CityEntity.COLUMN_COUNTRY_UPDATED, cityModel.country.updated_at)
-        values.put(DBContract.CityEntity.COLUMN_COUNTRY_COUNTRY_ID, cityModel.country.country_id)
+        values.put(DBContract.CityEntity.COLUMN_COUNTRY_CONTINENT_ID, cityModel.country.continent_id)
 
         // Insert the new row, returning the primary key value of the new row
         val newRowId = db.insert(DBContract.CityEntity.TABLE_NAME, null, values)
@@ -53,12 +54,19 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return true
     }
 
-    fun selectAllCities(): ArrayList<CityModel> {
+    fun truncateTable(){
+        val db = writableDatabase
+        db.execSQL(SQL_DELETE_ENTRIES)
+        onCreate(db)
+    }
+
+    @SuppressLint("Recycle")
+    fun selectAllCities(offset: Int): ArrayList<CityModel> {
         var cities = ArrayList<CityModel>()
         val db = writableDatabase
         var cursor: Cursor? = null
         try {
-            cursor = db.rawQuery("select * from " + DBContract.CityEntity.TABLE_NAME, null)
+            cursor = db.rawQuery("select * from " + DBContract.CityEntity.TABLE_NAME + " limit 15 offset " + offset, null)
         } catch (e: SQLiteException) {
             db.execSQL(SQL_CREATE_ENTRIES)
             return ArrayList()
@@ -83,11 +91,11 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 created_at = cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_CITY_CREATED))
                 updated_at = cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_CITY_UPDATED))
                 country_id = cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_ID))
-                country = Country(cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_COUNTRY_ID)),
+                country = Country(cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_ID)),
                         cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_NAME)),
                         cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_CREATED)),
                         cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_UPDATED)),
-                        cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_COUNTRY_ID)))
+                        cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_COUNTRY_CONTINENT_ID)))
 
                 cities.add(CityModel(id, name, local_name, lat, lng, created_at, updated_at, country_id, country))
                 cursor.moveToNext()
@@ -114,7 +122,7 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                         DBContract.CityEntity.COLUMN_COUNTRY_NAME + " TEXT," +
                         DBContract.CityEntity.COLUMN_COUNTRY_CREATED + " TEXT," +
                         DBContract.CityEntity.COLUMN_COUNTRY_UPDATED + " TEXT," +
-                        DBContract.CityEntity.COLUMN_COUNTRY_COUNTRY_ID + " INTEGER)"
+                        DBContract.CityEntity.COLUMN_COUNTRY_CONTINENT_ID + " INTEGER)"
 
         private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DBContract.CityEntity.TABLE_NAME
     }

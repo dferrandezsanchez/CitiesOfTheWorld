@@ -20,6 +20,7 @@ class CitiesListFragment : Fragment() {
 
     private var rootView: View? = null
     var citiesListApi: ArrayList<CityModel> = ArrayList()
+    var rv_cities: RecyclerView? = null
 
     private var scrolling: Boolean = false
 
@@ -32,13 +33,13 @@ class CitiesListFragment : Fragment() {
     }
 
     fun complete(rootView: View?) {
-        var rv_cities = rootView?.findViewById(R.id.rv_cities) as RecyclerView
-        rv_cities.layoutManager = LinearLayoutManager(activity)
-        rv_cities.adapter = CitiesListAdapter(citiesListApi, activity)
-        rv_cities.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        rv_cities = rootView?.findViewById(R.id.rv_cities) as RecyclerView
+        rv_cities!!.layoutManager = LinearLayoutManager(activity)
+        rv_cities!!.adapter = CitiesListAdapter(citiesListApi, activity)
+        rv_cities!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                if (scrolling && (rv_cities.layoutManager.childCount + (rv_cities.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                                >= rv_cities.layoutManager.itemCount - 5)) {
+                if (scrolling && (rv_cities!!.layoutManager.childCount + (rv_cities!!.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                                >= rv_cities!!.layoutManager.itemCount - 5)) {
                     scrolling = false
                     (activity as MainActivity).getCities(true)
                 }
@@ -56,15 +57,15 @@ class CitiesListFragment : Fragment() {
     fun setData(items: List<CityModel>) {
         citiesListApi.addAll(items)
         if (rv_cities != null) {
-            rv_cities.adapter.notifyDataSetChanged()
-            Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities.adapter.itemCount)
+            rv_cities!!.adapter.notifyDataSetChanged()
+            Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities!!.adapter.itemCount)
         }
     }
 
     fun clearList(){
         citiesListApi.clear()
         if (rv_cities != null) {
-            rv_cities.adapter.notifyDataSetChanged()
+            rv_cities!!.adapter.notifyDataSetChanged()
         }
     }
 

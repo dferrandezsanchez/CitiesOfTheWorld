@@ -12,6 +12,7 @@ import danielferrandez.com.citiesoftheworld.model.CityModel
 import danielferrandez.com.citiesoftheworld.ui.CitiesListFragment
 import danielferrandez.com.citiesoftheworld.ui.MapCitiesFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListener {
 
@@ -48,14 +49,29 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
 
     override fun getCitiesSuccess(items: List<CityModel>) {
         isSearching = false
-        citiesListFragment.setData(items)
-        mapFragment.setData(items)
+//        citiesListFragment.setData(items)
+//        mapFragment.setData(items)
+        getCitiesFromDB()
     }
 
     override fun getCitiesError() {
         isSearching = false
         Log.e("ERROR", "Data not loaded")
     }
+
+    override fun getCitiesFromDB() {
+        mPresenter.getCitiesFromDB()
+    }
+
+    override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {
+        citiesListFragment.setData(cities)
+        mapFragment.setData(cities)
+    }
+
+    override fun getCitiesFromDBError() {
+        Log.e("ERROR", "Data not loaded from DB")
+    }
+
 
     override fun showLoading() {
         if (firstLoading) {
