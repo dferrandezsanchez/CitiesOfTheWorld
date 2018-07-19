@@ -18,12 +18,10 @@ class MainPresenterImpl(var mainView: MainActivity) : MainPresenter {
 
     override fun getCitiesSuccess(items: List<CityModel>) {
         mainView.getCitiesSuccess(items)
-        mainView.hideLoading()
     }
 
     override fun getCitiesError(error: Throwable) {
         mainView.getCitiesError()
-        mainView.hideLoading()
     }
 
     override fun getCitiesFromDB() {
@@ -32,9 +30,11 @@ class MainPresenterImpl(var mainView: MainActivity) : MainPresenter {
 
     override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {
         mainView.getCitiesFromDBSuccess(cities)
+        mainView.hideLoading()
     }
 
     override fun getCitiesFromDBError() {
         mainView.getCitiesFromDBError()
+        mainView.hideLoading()
     }
 }

@@ -47,17 +47,19 @@ class MapCitiesFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun setupMap() {
-        for(element in citiesListApi) {
-            mMap?.addMarker(MarkerOptions()
-                    .position(LatLng(element.lat, element.lng))
-                    .title(element.name)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)))
-        }
-        var centerMap = LatLng(citiesListApi.get(0).lat, citiesListApi.get(0).lng)
-        if (citiesListApi.size > 1) {
-            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 0F))
-        }else{
-            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 8F))
+        if (citiesListApi.size > 0) {
+            for(element in citiesListApi) {
+                mMap?.addMarker(MarkerOptions()
+                        .position(LatLng(element.lat, element.lng))
+                        .title(element.name)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)))
+            }
+            var centerMap = LatLng(citiesListApi.get(0).lat, citiesListApi.get(0).lng)
+            if (citiesListApi.size > 1) {
+                mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 0F))
+            }else{
+                mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 8F))
+            }
         }
     }
 }

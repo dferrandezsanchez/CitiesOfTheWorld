@@ -8,6 +8,7 @@
     <string name="city_name">City Name</string>
     <string name="local_name">Local Name</string>
     <string name="country_name">Country Name</string>
+    <string name="no_results">Oops! There are no results...</string>
 
 
 </resources>

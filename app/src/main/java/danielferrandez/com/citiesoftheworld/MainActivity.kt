@@ -1,11 +1,13 @@
 package danielferrandez.com.citiesoftheworld
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import danielferrandez.com.citiesoftheworld.di.AppModule
 import danielferrandez.com.citiesoftheworld.di.DaggerAppComponent
 import danielferrandez.com.citiesoftheworld.implementations.MainPresenterImpl
@@ -52,6 +54,9 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
     }
 
     override fun getCities(fromScroll: Boolean) {
+        if(fromScroll){
+            firstLoading = false
+        }
         mainPresenter.getCities(querySend, fromScroll)
     }
 
@@ -62,7 +67,7 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
 
     override fun getCitiesError() {
         isSearching = false
-        Log.e("ERROR", "Data not loaded")
+        showError("Ups, looks like something went wrong, try again please!")
     }
 
     override fun getCitiesFromDB() {
@@ -70,12 +75,17 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
     }
 
     override fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>) {
-        citiesListFragment.setData(cities)
-        mapFragment.setData(cities)
+        if (cities.size != 0) {
+            citiesListFragment.setData(cities)
+            mapFragment.setData(cities)
+        }else if(firstLoading && cities.size == 0){
+            citiesListFragment.showEmptyLayout(true)
+            showError(getString(R.string.no_results))
+        }
     }
 
     override fun getCitiesFromDBError() {
-        Log.e("ERROR", "Data not loaded from DB")
+        showError("Ups, looks like something went wrong, try again please!")
     }
 
 
@@ -92,7 +102,6 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
         if (firstLoading) {
             lyt_progress.visibility = View.GONE
             lyt_main_content.visibility = View.VISIBLE
-            firstLoading = false
         } else {
             citiesListFragment.showProgress(false)
         }
@@ -133,6 +142,10 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
         mapFragment.clearList()
         querySend = ""
         getCities(false)
+    }
+
+    fun showError(message:String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

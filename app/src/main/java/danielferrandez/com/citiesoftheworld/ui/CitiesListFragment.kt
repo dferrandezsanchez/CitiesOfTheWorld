@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.LinearLayout
 import danielferrandez.com.citiesoftheworld.MainActivity
 import danielferrandez.com.citiesoftheworld.R
 import danielferrandez.com.citiesoftheworld.model.CityModel
@@ -23,6 +23,7 @@ class CitiesListFragment : Fragment() {
     var citiesListApi: ArrayList<CityModel> = ArrayList()
     var rv_cities: RecyclerView? = null
     var swiperefresh: SwipeRefreshLayout? = null
+    var lyt_empty_results: LinearLayout? = null
 
     private var scrolling: Boolean = false
 
@@ -57,6 +58,7 @@ class CitiesListFragment : Fragment() {
 
         //Swipe to refresh call to handleGetAllProducts setting the page var = 1
         swiperefresh = rootView.findViewById(R.id.swiperefresh) as SwipeRefreshLayout
+        lyt_empty_results = rootView.findViewById(R.id.lyt_empty_results) as LinearLayout
         swiperefresh!!.setOnRefreshListener {
             (activity as MainActivity).getCities(false)
         }
@@ -64,16 +66,27 @@ class CitiesListFragment : Fragment() {
 
     fun setData(items: List<CityModel>) {
         swiperefresh?.isRefreshing = false
+        showEmptyLayout(false)
         citiesListApi.addAll(items)
         if (rv_cities != null) {
             rv_cities!!.adapter.notifyDataSetChanged()
         }
     }
 
-    fun clearList(){
+    fun clearList() {
         citiesListApi.clear()
         if (rv_cities != null) {
             rv_cities!!.adapter.notifyDataSetChanged()
+        }
+    }
+
+    fun showEmptyLayout(show: Boolean) {
+        if (show) {
+            lyt_empty_results?.visibility = View.VISIBLE
+            swiperefresh?.visibility = View.GONE
+        } else {
+            lyt_empty_results?.visibility = View.GONE
+            swiperefresh?.visibility = View.VISIBLE
         }
     }
 
