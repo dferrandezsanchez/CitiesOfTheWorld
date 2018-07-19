@@ -84,7 +84,7 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         var updated_at: String
         var country_id: Int
         var country: Country
-        if (cursor!!.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 id = cursor.getInt(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_CITY_ID))
                 name = cursor.getString(cursor.getColumnIndex(DBContract.CityEntity.COLUMN_CITY_NAME))
