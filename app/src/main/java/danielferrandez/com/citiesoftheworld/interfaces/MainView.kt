@@ -9,7 +9,7 @@ interface MainView {
     fun getCitiesSuccess(items:List<CityModel>)
     fun getCitiesError()
 
-    fun getCitiesFromDB();
+    fun getCitiesFromDB()
     fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>)
     fun getCitiesFromDBError()
 

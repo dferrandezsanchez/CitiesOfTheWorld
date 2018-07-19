@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
             resetQuery()
             return@setOnCloseListener true
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.main_content, citiesListFragment)
-                .commit()
+        changeToList()
         getCities(false)
     }
 

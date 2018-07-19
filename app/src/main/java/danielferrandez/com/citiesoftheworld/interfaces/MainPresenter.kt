@@ -8,7 +8,7 @@ interface MainPresenter{
     fun getCitiesSuccess(items: List<CityModel>)
     fun getCitiesError(error: Throwable)
 
-    fun getCitiesFromDB();
+    fun getCitiesFromDB()
     fun getCitiesFromDBSuccess(cities: ArrayList<CityModel>)
     fun getCitiesFromDBError()
 

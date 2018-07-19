@@ -1,5 +1,7 @@
 package danielferrandez.com.citiesoftheworld.db
 
+/* We can Use Room with LiveData and Viewmodel As well*/
+
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
