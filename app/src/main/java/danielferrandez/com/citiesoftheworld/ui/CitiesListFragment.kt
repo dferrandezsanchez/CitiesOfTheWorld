@@ -2,6 +2,7 @@ package danielferrandez.com.citiesoftheworld.ui
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -21,6 +22,7 @@ class CitiesListFragment : Fragment() {
     private var rootView: View? = null
     var citiesListApi: ArrayList<CityModel> = ArrayList()
     var rv_cities: RecyclerView? = null
+    var swiperefresh: SwipeRefreshLayout? = null
 
     private var scrolling: Boolean = false
 
@@ -52,13 +54,19 @@ class CitiesListFragment : Fragment() {
                     scrolling = true
             }
         })
+
+        //Swipe to refresh call to handleGetAllProducts setting the page var = 1
+        swiperefresh = rootView.findViewById(R.id.swiperefresh) as SwipeRefreshLayout
+        swiperefresh!!.setOnRefreshListener {
+            (activity as MainActivity).getCities(false)
+        }
     }
 
     fun setData(items: List<CityModel>) {
+        swiperefresh?.isRefreshing = false
         citiesListApi.addAll(items)
         if (rv_cities != null) {
             rv_cities!!.adapter.notifyDataSetChanged()
-            Log.e("AÑADIDOS ELEMENTOS", "TOTAL " + rv_cities!!.adapter.itemCount)
         }
     }
 

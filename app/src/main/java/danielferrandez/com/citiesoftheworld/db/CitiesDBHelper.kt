@@ -61,12 +61,13 @@ class CitiesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     @SuppressLint("Recycle")
-    fun selectAllCities(offset: Int): ArrayList<CityModel> {
+    fun selectAllCities(perPage: Int, page: Int): ArrayList<CityModel> {
+        var offset = perPage*(page-1)
         var cities = ArrayList<CityModel>()
         val db = writableDatabase
         var cursor: Cursor
         try {
-            cursor = db.rawQuery("select * from " + DBContract.CityEntity.TABLE_NAME + " limit 15 offset " + offset, null)
+            cursor = db.rawQuery("select * from " + DBContract.CityEntity.TABLE_NAME + " limit "+perPage+" offset " + offset, null)
         } catch (e: SQLiteException) {
             db.execSQL(SQL_CREATE_ENTRIES)
             return ArrayList()

@@ -12,9 +12,11 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
 
     private var mRepository: MainRepository = MainRepositoryImpl(this)
     private var page:Int = 1
+    private var perPage = 20
     private var citiesDBHelper: CitiesDBHelper = CitiesDBHelper(mainView)
 
-    private var cities: ArrayList<CityModel> = ArrayList()
+    private var
+            cities: ArrayList<CityModel> = ArrayList()
 
     override fun getCities(filter:String?, fromScroll: Boolean) {
         if(fromScroll){
@@ -24,7 +26,7 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
             citiesDBHelper.truncateTable()
             cities.clear()
         }
-        mRepository.getCities(page, filter)
+        mRepository.getCities(page, perPage, filter)
     }
 
     override fun getCitiesSuccess(result: RequestModel) {
@@ -42,7 +44,7 @@ class MainInteractorImpl(private var mainPresenter: MainPresenterImpl, mainView:
 
     override fun getCitiesFromDB() {
         try {
-            cities = citiesDBHelper.selectAllCities(cities.size)
+            cities = citiesDBHelper.selectAllCities(perPage,page)
             getCitiesFromDBSuccess(cities)
         } catch (e: Exception) {
             getCitiesFromDBError()

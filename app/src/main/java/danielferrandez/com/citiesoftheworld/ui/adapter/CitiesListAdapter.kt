@@ -31,12 +31,12 @@ class CitiesListAdapter (val items: ArrayList<CityModel>, private val context: C
             itemView.tv_country_name.text = cityModel.country.name
             // Not sure if continent_id properly asigned to image, just to change each one
             when(cityModel.country.continent_id){
-                1 -> itemView.iv_city.setImageResource(R.drawable.africa)
+                1 -> itemView.iv_city.setImageResource(R.drawable.asia)
                 2 -> itemView.iv_city.setImageResource(R.drawable.europe)
                 3 -> itemView.iv_city.setImageResource(R.drawable.north_america)
-                4 -> itemView.iv_city.setImageResource(R.drawable.antartctica)
-                5 -> itemView.iv_city.setImageResource(R.drawable.asia)
-                6 -> itemView.iv_city.setImageResource(R.drawable.australia)
+                4 -> itemView.iv_city.setImageResource(R.drawable.africa)
+                5 -> itemView.iv_city.setImageResource(R.drawable.australia)
+                6 -> itemView.iv_city.setImageResource(R.drawable.antartctica)
                 7 -> itemView.iv_city.setImageResource(R.drawable.south_america)
                 else -> itemView.iv_city.setImageResource(R.drawable.default_continent)
             }

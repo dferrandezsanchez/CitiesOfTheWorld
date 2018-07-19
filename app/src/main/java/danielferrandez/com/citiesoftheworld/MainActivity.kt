@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
         mapFragment = MapCitiesFragment()
         DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
         main_filter.setOnQueryTextListener(this)
+        // Work around to reset filter
+        main_filter.setOnCloseListener {
+            resetQuery()
+            return@setOnCloseListener true
+        }
         fragmentManager.beginTransaction()
                 .replace(R.id.main_content, citiesListFragment)
                 .commit()
@@ -54,8 +59,6 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
 
     override fun getCitiesSuccess(items: List<CityModel>) {
         isSearching = false
-//        citiesListFragment.setData(items)
-//        mapFragment.setData(items)
         getCitiesFromDB()
     }
 
@@ -121,9 +124,17 @@ class MainActivity : AppCompatActivity(), MainView, SearchView.OnQueryTextListen
     }
 
     override fun onQueryTextChange(p0: String?): Boolean {
-
-        Log.i("Texto", p0)
+        if (p0!!.isEmpty()) {
+            resetQuery()
+        }
         return true
+    }
+
+    fun resetQuery(){
+        citiesListFragment.clearList()
+        mapFragment.clearList()
+        querySend = ""
+        getCities(false)
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

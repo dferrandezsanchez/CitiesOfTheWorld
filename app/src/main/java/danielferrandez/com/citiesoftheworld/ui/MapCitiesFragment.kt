@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import danielferrandez.com.citiesoftheworld.R
@@ -30,6 +32,7 @@ class MapCitiesFragment : Fragment(), OnMapReadyCallback {
     // In java I can resume Map state, not working in Kotlin for unknown reason
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
         setupMap()
     }
 
@@ -44,9 +47,17 @@ class MapCitiesFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun setupMap() {
-        // Add a marker in Sydney and move the camera
         for(element in citiesListApi) {
-            mMap?.addMarker(MarkerOptions().position(LatLng(element.lat, element.lng)).title(element.name))
+            mMap?.addMarker(MarkerOptions()
+                    .position(LatLng(element.lat, element.lng))
+                    .title(element.name)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)))
+        }
+        var centerMap = LatLng(citiesListApi.get(0).lat, citiesListApi.get(0).lng)
+        if (citiesListApi.size > 1) {
+            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 0F))
+        }else{
+            mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(centerMap, 8F))
         }
     }
 }
