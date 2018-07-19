@@ -26,7 +26,7 @@ App BottomNavigation Based with listview and mapview fragment to show data reque
 - Pagination will create new SQLITE regs and then, publish them on map and list
 - General Filter applies into map and listview as well, so if user search something, SQLITE table is refresehd with this new results, and then publish new data from cache.
 
-### Used for
+### Used in project
 
 - Kotlin
 - Retrofit
@@ -34,16 +34,18 @@ App BottomNavigation Based with listview and mapview fragment to show data reque
 - Sqlite
 - MVP pattern
 - Recyclerview
+- Dagger 2
+- Espresso
 
 ### How it works?
 
 #### General paged results list
 
-- On the first run, app make request to API to obtain cities and store firs page locally. When user scrolls to retrieve more results, before arrive to bottom, apps lauchn new query to obtain next page results, and repeat this process eac time user is near to lasts results until last page
+- On the first run, app make request to API to obtain cities and store firs page locally. When user scrolls to retrieve more results, before arrive to bottom, apps lauchn new query to obtain next page results, and repeat this process each time user is near to lasts results until last page
 
 #### Filtered paged results
 
-- User can filter results from list and map, then if user scrolls down in list, app request for more results as in general paged scenario but with filtered data from API and stored in cache previously of updating data on lista and map
+- User can filter results from list and map, then if user scrolls down in list, app request for more results as in general paged scenario but with filtered data from API and stored in cache previously of updating data on list and map
 
 - As SeachView component does not include "empty" queries, there is implemented a workaround to reset filters when user tap on cross icon or remove all text from search field
 
